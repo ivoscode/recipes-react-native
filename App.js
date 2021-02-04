@@ -1,13 +1,17 @@
+import 'react-native-gesture-handler';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { store } from './src/state/store/index';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
-import React from 'react';
-import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import TabNavi from './src/navigation/AppNavi';
 
 export default function App() {
   const [fontsLoaded] = Font.useFonts({
     'Inter-Black': require('./assets/fonts/Inter-Black.otf'),
-    'Inter-SemiBoldItalic':
-      'https://rsms.me/inter/font-files/Inter-SemiBoldItalic.otf?v=3.12',
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -15,12 +19,10 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Platform Default</Text>
-      <Text style={{ fontFamily: "Inter-Black" }}>Inter Black</Text>
-      <Text style={{ fontFamily: "Inter-SemiBoldItalic" }}>
-        Inter SemiBoldItalic
-      </Text>
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <TabNavi />
+      </NavigationContainer>
+    </Provider>
   );
 }
